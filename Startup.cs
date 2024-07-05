@@ -21,15 +21,13 @@ public class Startup
             .AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
-                options.JsonSerializerOptions.MaxDepth = 64; // Increase if necessary
+                options.JsonSerializerOptions.MaxDepth = 64; 
                 options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
             });
 
-        // Configure Entity Framework with SQLite
+       
         services.AddDbContext<TaskerContext>(options =>
             options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
-        
-        // Other service configurations
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

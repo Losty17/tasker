@@ -68,7 +68,6 @@ public class TaskController(TaskerContext context) : Controller
             task.FinishedAt = null;
         }
 
-        // Update Category and User
         var category = await _context.Categories.FindAsync(inputTask.CategoryId);
         var user = await _context.Users.FindAsync(inputTask.UserId);
 

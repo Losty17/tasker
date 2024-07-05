@@ -8,8 +8,8 @@ public class Task
     public int Status { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime? FinishedAt { get; set; }
-    public int CategoryId { get; set; }  // Foreign key reference
-    public int UserId { get; set; }  // Foreign key reference
+    public int CategoryId { get; set; }  
+    public int UserId { get; set; }  
 
     [JsonIgnore]
     public Category Category { get; set; } = null!;

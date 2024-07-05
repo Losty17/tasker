@@ -34,7 +34,6 @@ public class CategoryController(TaskerContext context) : Controller {
       _context.Categories.Add(category);
       await _context.SaveChangesAsync();
 
-      // Return the category without causing a cycle
       return CreatedAtAction(nameof(Show), new { id = category.Id }, new { category.Id, category.Name, category.UserId });
   }
 
