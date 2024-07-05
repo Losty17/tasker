@@ -21,26 +21,39 @@ public class CategoryController(TaskerContext context) : Controller {
   }
 
   [HttpPost("Categories")]
-  public async Task<IActionResult> Create(Category category) {
-    _context.Categories.Add(category);
-    await _context.SaveChangesAsync();
+  public async Task<IActionResult> Create([FromBody] Category category)
+  {
+      var user = await _context.Users.FindAsync(category.UserId);
+      if (user == null)
+      {
+          return BadRequest(new { message = "User not found" });
+      }
 
-    return Created($"/Categories/{category.Id}", category);
+      category.User = user;
+
+      _context.Categories.Add(category);
+      await _context.SaveChangesAsync();
+
+      // Return the category without causing a cycle
+      return CreatedAtAction(nameof(Show), new { id = category.Id }, new { category.Id, category.Name, category.UserId });
   }
 
   [HttpPut("Categories/{id}")]
-  public async Task<IActionResult> Update(int id, Category inputCategory) {
-    var category = await _context.Categories.FindAsync(id);
+  public async Task<IActionResult> Update(int id, [FromBody] Category inputCategory)
+  {
+      var category = await _context.Categories.FindAsync(id);
 
-    if (category is null) {
-      return NotFound();
-    }
+      if (category == null)
+      {
+          return NotFound();
+      }
 
-    category.Name = inputCategory.Name;
+      category.Name = inputCategory.Name;
+      category.UserId = inputCategory.UserId;
 
-    await _context.SaveChangesAsync();
+      await _context.SaveChangesAsync();
 
-    return Ok(category);
+      return Ok(new { category.Id, category.Name, category.UserId });
   }
 
   [HttpDelete("Categories/{id}")]

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Tasker.Migrations
 {
     [DbContext(typeof(TaskerContext))]
-    [Migration("20240704013106_InitialCreate")]
+    [Migration("20240705192758_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -47,10 +47,10 @@ namespace Tasker.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateOnly>("CreatedAt")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateOnly?>("FinishedAt")
+                    b.Property<DateTime?>("FinishedAt")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("Status")
